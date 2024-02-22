@@ -1,5 +1,25 @@
 <%- include('header') -%>
 
-<h1>Staðan í deildinni</h1>
+	<h1>Staðan í deildinni</h1>
 
-<%- include('footer') -%>
+	<table>
+		<thead>
+			<tr>
+				<th>Lið</th>
+				<th>Stig</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% for (const team of locals.stadan) { %>
+				<tr>
+					<td>
+						<%= team[0] %>
+					</td>
+					<td>
+						<%= team[1] %>
+					</td>
+				</tr>
+				<% } %>
+		</tbody>
+	</table>
+	<%- include('footer') -%>

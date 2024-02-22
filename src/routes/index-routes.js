@@ -1,5 +1,6 @@
 import express from 'express';
 import { getGames } from '../lib/db.js';
+import { stadan } from '../setup/score.js';
 import { currentdate } from '../util/date.js';
 
 export const indexRouter = express.Router();
@@ -13,7 +14,6 @@ async function indexRoute(req, res) {
 
 async function leikirRoute(req, res) {
 	const games = await getGames();
-	console.log(games)
 	return res.render('leikir', {
 		title: 'Leikir',
 		games,
@@ -22,8 +22,10 @@ async function leikirRoute(req, res) {
 }
 
 async function stadaRoute(req, res) {
+	const stada = await stadan()
 	return res.render('stada', {
 		title: 'Staðan',
+		stadan: stada,
 		time: currentdate(),
 	});
 }

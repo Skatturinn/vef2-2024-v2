@@ -1,9 +1,19 @@
 <%- include('header') -%>
+	<h1>
+		<%= locals.title ?? '' %>
+	</h1>
 
-<section>
-  <h2>Umsjónarsíða</h2>
-  <p>Innskráningar krafið til að eiga við gögn:</p>
-  <p><a href="/admin">Innskrá</a></p>
-</section>
+	<% if (locals.loggedIn) { %>
+		<p>Innsrkáður notandi: <%= locals.user.name %> (<%= locals.user.username %>)
+					<% } else { %>
+						<p>Þú ert ekki innskráður notandi.</p>
+						<% } %>
 
-<%- include('footer') -%>
+
+							<section>
+								<h2>Umsjónarsíða</h2>
+								<p>Innskráningar krafið til að eiga við gögn:</p>
+								<p><a href="/admin">Innskrá</a></p>
+							</section>
+
+							<%- include('footer') -%>

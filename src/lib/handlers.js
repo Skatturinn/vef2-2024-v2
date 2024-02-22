@@ -5,7 +5,10 @@
  */
 export function handler404(req, res) {
   const title = 'Síða fannst ekki';
-  return res.status(404).render('error', { title });
+  const now = new Date();
+  const time = `${now.getHours()}:${now.getMinutes()} -
+  ${now.getUTCDate()}/${now.getUTCDay()}/${now.getUTCFullYear()}`;
+  return res.status(404).render('error', { title, time });
 }
 
 /**

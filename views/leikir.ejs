@@ -1,22 +1,43 @@
 <%- include('header') -%>
 
-<h1>Seinustu leikir</h1>
+	<h1>Seinustu leikir</h1>
+	<table>
+		<thead>
+			<th>Dagsetning</th>
+			<th>Heima lið</th>
+			<th>Heima lið skor</th>
+			<th>Útilið</th>
+			<th>Útilið skor</th>
+		</thead>
+		<tbody>
+			<% let datevariable%>
+				<% for (const game of locals.games) { %>
+					<tr>
+						<% if (String(game.date)!==String(datevariable)) { %>
+							<td class="newdate">
+								<% } else { %>
+							<td class="olddate">
+								<% } %>
+									<%= String(game.date.toISOString().slice(0,
+										10).split('-').reverse()).replaceAll(',', '/' ) %>
+							</td>
+							<td>
+								<%= game.home.name %>
+							</td>
+							<td>
+								<%= game.home.score %>
+							</td>
+							<td>
+								<%= game.away.name %>
+							</td>
+							<td>
+								<%= game.away.score %>
+							</td>
+					</tr>
 
-<table>
-  <th>
-    <td>Heima lið</td>
-    <td>Heima lið skor</td>
-    <td>Útilið</td>
-    <td>Útilið skor</td>
-  </th>
-<% for (const game of locals.games) { %>
-  <tr>
-    <td><%= game.home.name %></td>
-    <td><%= game.home.score %></td>
-    <td><%= game.away.name %></td>
-    <td><%= game.away.score %></td>
-  </tr>
-<% } %>
-</table>
+					<% datevariable=game.date %>
+						<% } %>
+		</tbody>
+	</table>
 
-<%- include('footer') -%>
+	<%- include('footer') -%>

@@ -1,16 +1,17 @@
 import express from 'express';
 import session from 'express-session';
-import passport from 'passport';
 import { Strategy } from 'passport-local';
 import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import { environment } from './lib/environment.js';
 import { handler404, handlerError } from './lib/handlers.js';
 import { logger } from './lib/logger.js';
+import passport from './lib/login.js';
 import { adminRouter } from './routes/admin-routes.js';
 import { indexRouter } from './routes/index-routes.js';
 
-import { comparePasswords, findById, findByUsername } from './lib/users.js';
+import { findById, findByUsername } from './lib/db.js';
+import { comparePasswords } from './lib/users.js';
 
 export const env = environment(process.env, logger);
 

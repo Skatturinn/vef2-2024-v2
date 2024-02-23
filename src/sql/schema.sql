@@ -15,8 +15,9 @@ CREATE TABLE IF NOT EXISTS public.games (
   CONSTRAINT fk_teams_away FOREIGN KEY (away) REFERENCES teams (id)
 );
 
-CREATE TABLE IF NOT EXISTS public.users (
+CREATE TABLE public.users (
   id serial primary key,
   username character varying(64) NOT NULL,
-  password character varying(256) NOT NULL
+  password character varying(256) NOT NULL,
+  admin BOOLEAN DEFAULT FALSE
 );

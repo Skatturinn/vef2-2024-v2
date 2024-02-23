@@ -1,3 +1,15 @@
+# Umbeðin aðgangur
+
+## Admin
+
+- Notendanafn: admin
+- Lykilorð: b
+
+## User
+
+- Notendanafn: guest
+- Lykilorð: b
+
 # Vefforritun 2, 2024, verkefni 2: Express, postgres og hýsing
 
 - [Kynning á verkefni](https://youtu.be/OlYfb4N-IZQ)
@@ -17,9 +29,9 @@ Verkefnið er framhald á [verkefni 1](https://github.com/vefforritun/vef2-2024-
 
 Setja skal upp express vef með routes fyrir:
 
-- Forsíðu, með hlekkjum á aðrar síður
-- Leikir, yfirlit yfir leiki
-- Staða, yfirlit yfir stöðu í deild
+- Forsíðu, með hlekkjum á aðrar síður #
+- Leikir, yfirlit yfir leiki #
+- Staða, yfirlit yfir stöðu í deild #
 - Umsjónarsíða
   - Innskráning
   - Virkni, má vera á sér síðu hvert eða á einni síðu:
@@ -126,13 +138,13 @@ Unnið verður áfram í uppsetningu á express og notendaumsjón í fyrirlestri
 
 ## Mat
 
-- 20% – Express vefur
-- 20% – Postgres gagnagrunnur og gögn
-- 15% – Admin virkni og notendaumsjón
-- 15% – Form og gagnaskráning
-- 10% — Útlit
-- 10% – Tæki, tól og test
-- 10% – GitHub og hýsing
+- 20% – Express vefur \*
+- 20% – Postgres gagnagrunnur og gögn \*
+- 15% – Admin virkni og notendaumsjón ?
+- 15% – Form og gagnaskráning ?
+- 10% — Útlit -
+- 10% – Tæki, tól og test -
+- 10% – GitHub og hýsing -
 
 ## Sett fyrir
 

@@ -2,9 +2,11 @@
 <html lang="is">
 
 <head>
-  <meta charset="utf-8">
-  <title><%= locals.title ?? '' %></title>
-  <link rel="stylesheet" href="/styles.css">
+	<meta charset="utf-8">
+	<title>
+		<%= locals.title ?? '' %>
+	</title>
+	<link rel="stylesheet" href="/styles.css">
 </head>
 
 <body>
@@ -14,9 +16,19 @@
 				<li><a href="/">Forsíða</a></li>
 				<li><a href="/leikir">Leikir</a></li>
 				<li><a href="/stada">Staða</a></li>
-				<li><a href="/login">Innskrá</a></li>
-			  </ul>
+				<% if (locals.loggedIn) { %>
+					<li>
+						<a href="/logout">Útskrá</a>
+					</li>
+					<% } else { %>
+						<li>
+							<a href="/login">Innskrá</a>
+						</li>
+						<li>
+							<a href="/register">Nýskrá</a>
+						</li>
+						<% } %>
+			</ul>
 		</nav>
 	</header>
-  <main>
-
+	<main>

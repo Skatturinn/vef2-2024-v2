@@ -1,68 +1,122 @@
 import express from 'express';
+import { validationResult } from 'express-validator';
 import passport from 'passport';
-import { insertGame } from '../lib/db.js';
+import { catchErrors } from '../lib/catch-errors.js';
+import { createUser, getGames, getTeamsId, insertGame, listTeams } from '../lib/db.js';
+import {
+	userRegistrationValidationMiddleware,
+	userSanitizationMiddleware,
+	userXssSanitizationMiddleware
+} from '../lib/validation.js';
+import { currentdate } from '../util/date.js';
+import { una } from './index-routes.js';
 
 export const adminRouter = express.Router();
 
-async function indexRoute(req, res) {
-  return res.render('login', {
-    title: 'Innskráning',
-  });
+function login(req, res) {
+	const loggedIn = req.isAuthenticated();
+	if (loggedIn) {
+		return res.redirect('/');
+	}
+
+	let message = '';
+
+	// Athugum hvort einhver skilaboð séu til í session, ef svo er birtum þau
+	// og hreinsum skilaboð
+	if (req.session.messages && req.session.messages.length > 0) {
+		message = req.session.messages.join(', ');
+		req.session.messages = [];
+	}
+
+	return res.render('login', { message, title: 'Innskráning', loggedIn });
 }
-
 async function adminRoute(req, res) {
-  const user = req.user ?? null;
-  const loggedIn = req.isAuthenticated();
-
-  return res.render('admin', {
-    title: 'Admin upplýsingar, mjög leynilegt',
-    user,
-    loggedIn,
-  });
+	const teams = await listTeams();
+	const games = await getGames();
+	// const user = req.user ?? null;
+	const time = currentdate();
+	const loggedIn = req.isAuthenticated();
+	const { username, admin } = una(req)
+	return res.render('admin', {
+		title: 'Admin upplýsingar, mjög leynilegt',
+		games,
+		loggedIn,
+		teams,
+		username,
+		admin,
+		time
+	});
 }
 
 // TODO færa á betri stað
 // Hjálpar middleware sem athugar hvort notandi sé innskráður og hleypir okkur
 // þá áfram, annars sendir á /login
 function ensureLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
+	if (req.isAuthenticated()) {
+		return next();
+	}
 
-  return res.redirect('/login');
+	return res.redirect('/login');
+}
+async function createValidationCheck(req, res, next) {
+	const validation = validationResult(req);
+	const customValidations = ['nei takk']
+	if (!validation.isEmpty()) {
+		throw new Error(validation.errors.concat(customValidations))
+	}
+}
+async function createAccount(req, res) {
+	const { username, password, king } = req.body
+	try {
+		createValidationCheck(req, res)
+		await createUser(username, password, king)
+	} catch (err) {
+		const message = err;
+		return res.render('register', { message, title: 'Nýskráning' })
+	}
+	return res.redirect('/login')
 }
 
 function skraRoute(req, res, next) {
-  return res.render('skra', {
-    title: 'Skrá leik',
-  });
+	return res.render('skra', {
+		title: 'Skrá leik',
+	});
 }
 
 function skraRouteInsert(req, res, next) {
-  // TODO mjög hrátt allt saman, vantar validation!
-  const { home_name, home_score, away_name, away_score } = req.body;
+	// TODO mjög hrátt allt saman, vantar validation!
+	const { when, homename, homescore, awayname, awayscore } = req.body;
+	const date = new Date(when);
+	console.log(date)
+	getTeamsId()
+	const result = insertGame(date, homename, homescore, awayname, awayscore);
 
-  const result = insertGame(home_name, home_score, away_name, away_score);
-
-  res.redirect('/leikir');
+	res.redirect('/leikir');
 }
 
-adminRouter.get('/login', indexRoute);
+adminRouter.get('/register',
+	(req, res) => res.render('register', { message: '', title: 'Nýskráning' }))
+adminRouter.post('/register',
+	userRegistrationValidationMiddleware(),
+	userXssSanitizationMiddleware(),
+	userSanitizationMiddleware(),
+	(catchErrors(createAccount)))
+adminRouter.get('/login', login);
 adminRouter.get('/admin', ensureLoggedIn, adminRoute);
 adminRouter.get('/skra', skraRoute);
 adminRouter.post('/skra', skraRouteInsert);
 
 adminRouter.post(
-  '/login',
+	'/login',
 
-  // Þetta notar strat að ofan til að skrá notanda inn
-  passport.authenticate('local', {
-    failureMessage: 'Notandanafn eða lykilorð vitlaust.',
-    failureRedirect: '/login',
-  }),
+	// Þetta notar strat að ofan til að skrá notanda inn
+	passport.authenticate('local', {
+		failureMessage: 'Notandanafn eða lykilorð vitlaust.',
+		failureRedirect: '/login',
+	}),
 
-  // Ef við komumst hingað var notandi skráður inn, senda á /admin
-  (req, res) => {
-    res.redirect('/admin');
-  },
+	// Ef við komumst hingað var notandi skráður inn, senda á /admin
+	(req, res) => {
+		res.redirect('/admin');
+	},
 );

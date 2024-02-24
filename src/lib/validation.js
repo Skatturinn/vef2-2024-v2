@@ -5,53 +5,9 @@ import { getGames, listTeams } from './db.js';
 import { una } from './users.js';
 
 
-// Endurnýtum mjög líka validation
-
-export function registrationValidationMiddleware(textField) {
-	if (body('name')) {
-		return [
-			body('name')
-				.trim()
-				.isLength({ min: 1 })
-				.withMessage('Nafn má ekki vera tómt'),
-			body('name')
-				.isLength({ max: 64 })
-				.withMessage('Nafn má að hámarki vera 64 stafir'),
-			body(textField)
-				.isLength({ max: 400 })
-				.withMessage(
-					`${textField === 'comment' ? 'Athugasemd' : 'Lýsing'
-					} má að hámarki vera 400 stafir`
-				),
-		];
-	}
-	return [
-		body(textField)
-			.isLength({ max: 400 })
-			.withMessage(
-				`${textField === 'comment' ? 'Athugasemd' : 'Lýsing'
-				} má að hámarki vera 400 stafir`
-			),
-	];
-}
-
-// Viljum keyra sér og með validation, ver gegn „self XSS“
-export function xssSanitizationMiddleware(textField) {
-	if (body('name')) {
-		return [
-			body('name').customSanitizer((v) => xss(v)),
-			body(textField).customSanitizer((v) => xss(v)),
-		];
-	}
-	return [
-		body(textField).customSanitizer((v) => xss(v))
-	];
-}
-
 export function sanitizationMiddleware(textField) {
 	return [body(textField).trim().escape()];
 }
-
 
 export function userRegistrationValidationMiddleware() {
 	return [
@@ -160,7 +116,7 @@ export async function validationCheckUpdate(req, res, next) {
 			home: { name: heima.name, score: homescore },
 			away: { name: uti.name, score: awayscore }
 		}
-		if (!games?.includes(game)) {
+		if (games?.includes(game)) {
 			customValidations.push({
 				param: 'homename',
 				msg: 'Leikur er nú þegar til'
@@ -207,11 +163,3 @@ export async function validationCheckUpdate(req, res, next) {
 
 	return next();
 }
-
-
-// .custom((value) => {
-// 	if (value > new Date() && value < new Date((new Date()).getFullYear(), -1)) {
-// 		return false
-// 	}
-// 	return true
-// })

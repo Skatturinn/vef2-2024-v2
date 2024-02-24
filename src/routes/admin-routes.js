@@ -31,7 +31,7 @@ function login(req, res) {
 		req.session.messages = [];
 	}
 
-	return res.render('login', { message, title: 'Innskráning', loggedIn });
+	return res.render('login', { message, title: 'Innskráning', loggedIn, time: currentdate() });
 }
 async function adminRoute(req, res) {
 	const teams = await listTeams();
@@ -75,7 +75,7 @@ async function createAccount(req, res) {
 		await createUser(username, password, king)
 	} catch (err) {
 		const message = err;
-		return res.render('register', { message, title: 'Nýskráning' })
+		return res.render('register', { message, title: 'Nýskráning', time: currentdate() })
 	}
 	return res.redirect('/login')
 }
@@ -116,7 +116,7 @@ async function skraRouteInsert(req, res) {
 }
 
 adminRouter.get('/register',
-	(req, res) => res.render('register', { message: '', title: 'Nýskráning' }))
+	(req, res) => res.render('register', { message: '', title: 'Nýskráning', time: currentdate() }))
 adminRouter.post('/register',
 	userRegistrationValidationMiddleware(),
 	userXssSanitizationMiddleware(),

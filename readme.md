@@ -140,11 +140,11 @@ Unnið verður áfram í uppsetningu á express og notendaumsjón í fyrirlestri
 
 - 20% – Express vefur \*
 - 20% – Postgres gagnagrunnur og gögn \*
-- 15% – Admin virkni og notendaumsjón ?
-- 15% – Form og gagnaskráning ?
-- 10% — Útlit -
-- 10% – Tæki, tól og test -
-- 10% – GitHub og hýsing -
+- 15% – Admin virkni og notendaumsjón \*
+- 15% – Form og gagnaskráning \*
+- 10% — Útlit \*
+- 10% – Tæki, tól og test \*
+- 10% – GitHub og hýsing \*
 
 ## Sett fyrir
 

@@ -1,29 +1,34 @@
 <h1>Bæta við leik</h1>
-
-<form method="post" action="/skra">
-	<div>
-		<label for="when">Dagsetning?</label>
-		<input type="date" id="whendate" name="when" required>
-	</div>
-	<div>
-		<label for="homename">Heima lið</label>
-		<select id="homename" list="teams" name="homename" required>
-			<%- include("teamoption") %>
-		</select>
-	</div>
-	<div>
-		<label for="homescore">Heima skor</label>
-		<input type="number" id="homescore" name="homescore" min="0" value="0" required>
-	</div>
-	<div>
-		<label for="awayname">Úti lið</label>
-		<select id="awayname" list="teams" name="awayname" required>
-			<%- include("teamoption") %>
-		</select>
-	</div>
-	<div>
-		<label for="awayscore">Úti lið skor</label>
-		<input type="number" id="awayscore" name="awayscore" min="0" value="0" required>
-	</div>
-	<button>Skrá</button>
-</form>
+<% const dateArray=locals.time.split('/').reverse() %>
+	<% const dateString=String(dateArray).replaceAll(',','-') %>
+		<form method="post" action="/skra">
+			<div>
+				<label for="when">Dagsetning?</label>
+				<input type="date" value="<%= locals.when || dateString %>"
+					min="<%= String((new Date(dateArray[0],dateArray[1]-2 || -1,dateArray[2]).toISOString()).slice(0, 10)) %>"
+					max="<%= dateString %>" required id="when" name="when">
+			</div>
+			<div>
+				<label for="homename">Heima lið</label>
+				<select id="homename" name="homename" value="<%= locals.homename || 0 %>" required>
+					<%- include("teamoption") %>
+				</select>
+			</div>
+			<div>
+				<label for="homescore">Heima skor</label>
+				<input type="number" id="homescore" name="homescore" min="0" value="<%= locals.homescore || 0 %>"
+					required>
+			</div>
+			<div>
+				<label for="awayname">Úti lið</label>
+				<select id="awayname" name="awayname" required value="<%= locals.awayname || 0 %>">
+					<%- include("teamoption") %>
+				</select>
+			</div>
+			<div>
+				<label for="awayscore">Úti lið skor</label>
+				<input type="number" id="awayscore" name="awayscore" min="0" value="<%= locals.awayscore || 0 %>"
+					required>
+			</div>
+			<button>Skrá</button>
+		</form>

@@ -9,11 +9,30 @@
 						<p>Þú ert ekki innskráður notandi.</p>
 						<% } %>
 
-
-							<section>
-								<h2>Umsjónarsíða</h2>
-								<p>Innskráningar krafið til að eiga við gögn:</p>
-								<p><a href="/admin">Innskrá</a></p>
-							</section>
+							<ul>
+								<li><a href="/leikir">
+										<section>
+											<h2>Leikir</h2>
+											<p>Síða með útkomu nýlegra leikja í deildinni:</p>
+											<p>Skoða</p>
+										</section>
+									</a></li>
+								<li><a href="/stada">
+										<section>
+											<h2>Staða</h2>
+											<p>Síða yfir stöðu liða í deildinni:</p>
+											<p>Skoða</p>
+										</section>
+									</a></li>
+								<li>
+									<a href="/admin">
+										<section>
+											<h2>Umsjónarsíða</h2>
+											<p>Innskráningar krafið til að eiga við gögn:</p>
+											<p>Innskrá</p>
+										</section>
+									</a>
+								</li>
+							</ul>
 
 							<%- include('footer') -%>

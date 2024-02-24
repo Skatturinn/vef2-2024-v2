@@ -1,7 +1,16 @@
 <%- include('header') -%>
 
 	<%- include('skra') %>
+		<% if (locals.errors?.length> 0) { %>
+			<h3 class="errors__title">Villur við skráningu:</h3>
+			<ul class="errors">
+				<% locals.errors.forEach((error)=> { %>
+					<li class="error"><label for="<%= error.param %>">
+							<%= error.msg %>
+						</label></li>
+					<% }); %>
+			</ul>
+			<% } %>
+				<%- include('tableleikir') %>
 
-		<%- include('tableleikir') %>
-
-			<%- include('footer') -%>
+					<%- include('footer') -%>

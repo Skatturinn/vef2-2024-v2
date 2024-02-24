@@ -66,7 +66,8 @@ export async function getGames() {
     LEFT JOIN
     	teams AS away_team ON away_team.id = games.away
 	ORDER BY
-  		date;
+  		date
+		DESC;
   `;
 
 	const result = await query(q);

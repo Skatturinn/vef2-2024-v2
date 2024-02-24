@@ -2,11 +2,14 @@ import express from 'express';
 import { validationResult } from 'express-validator';
 import passport from 'passport';
 import { catchErrors } from '../lib/catch-errors.js';
-import { createUser, getGames, getTeamsId, insertGame, listTeams } from '../lib/db.js';
+import { createUser, getGames, insertGame, listTeams } from '../lib/db.js';
 import {
+	gameRegistrationValidationMiddleware,
+	gameXssSanitizationMiddleware,
 	userRegistrationValidationMiddleware,
 	userSanitizationMiddleware,
-	userXssSanitizationMiddleware
+	userXssSanitizationMiddleware,
+	validationCheckUpdate
 } from '../lib/validation.js';
 import { currentdate } from '../util/date.js';
 import { una } from './index-routes.js';
@@ -86,12 +89,14 @@ function skraRoute(req, res, next) {
 function skraRouteInsert(req, res, next) {
 	// TODO mjög hrátt allt saman, vantar validation!
 	const { when, homename, homescore, awayname, awayscore } = req.body;
-	const date = new Date(when);
-	console.log(date)
-	getTeamsId()
-	const result = insertGame(date, homename, homescore, awayname, awayscore);
+	const result = insertGame(
+		new Date(when),
+		Number(homename),
+		Number(homescore),
+		Number(awayname),
+		Number(awayscore));
 
-	res.redirect('/leikir');
+	res.redirect('/admin');
 }
 
 adminRouter.get('/register',
@@ -103,8 +108,11 @@ adminRouter.post('/register',
 	(catchErrors(createAccount)))
 adminRouter.get('/login', login);
 adminRouter.get('/admin', ensureLoggedIn, adminRoute);
-adminRouter.get('/skra', skraRoute);
-adminRouter.post('/skra', skraRouteInsert);
+adminRouter.post('/skra',
+	gameRegistrationValidationMiddleware(),
+	gameXssSanitizationMiddleware(),
+	catchErrors(validationCheckUpdate),
+	(catchErrors(skraRouteInsert)));
 
 adminRouter.post(
 	'/login',

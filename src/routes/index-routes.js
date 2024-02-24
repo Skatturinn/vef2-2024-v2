@@ -1,5 +1,5 @@
 import express from 'express';
-import { getGames } from '../lib/db.js';
+import { getGames, listTeams } from '../lib/db.js';
 import { stadan } from '../setup/score.js';
 import { currentdate } from '../util/date.js';
 
@@ -25,6 +25,9 @@ async function indexRoute(req, res) {
 async function leikirRoute(req, res) {
 	const loggedIn = req.isAuthenticated();
 	const games = await getGames();
+	const teams = await listTeams();
+	const sigur = teams?.map(stak => stak.id === 1)
+	console.log(sigur?.includes(true))
 	return res.render('leikir', {
 		title: 'Leikir',
 		games,

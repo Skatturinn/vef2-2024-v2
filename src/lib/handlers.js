@@ -4,11 +4,11 @@
  * @param {import('express').Response} res Response object
  */
 export function handler404(req, res) {
-  const title = 'Síða fannst ekki';
-  const now = new Date();
-  const time = `${now.getHours()}:${now.getMinutes()} -
+	const title = 'Síða fannst ekki';
+	const now = new Date();
+	const time = `${now.getHours()}:${now.getMinutes()} -
   ${now.getUTCDate()}/${now.getUTCDay()}/${now.getUTCFullYear()}`;
-  return res.status(404).render('error', { title, time });
+	return res.status(404).render('error', { title, time });
 }
 
 /**
@@ -19,8 +19,8 @@ export function handler404(req, res) {
  * @param {import('express').NextFunction | null} next Next function
  */
 export function handlerError(err, req, res, next) {
-  console.error('error occured', err, next);
-  const templateData = { title: 'Villa kom upp' };
+	console.error('error occured', err, next);
+	const templateData = { title: 'Villa kom upp' };
 
-  return res.status(500).render('error', templateData);
+	return res.status(500).render('error', templateData);
 }

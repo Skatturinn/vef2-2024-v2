@@ -84,10 +84,6 @@ export function userSanitizationMiddleware() {
 	return [body('username').trim().escape(), body('password').trim().escape()];
 }
 
-function isDateInRange2Months(value, { req, location, path }) {
-
-}
-
 export function gameRegistrationValidationMiddleware() {
 	return [
 		body('when')

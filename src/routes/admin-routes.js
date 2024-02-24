@@ -61,7 +61,7 @@ function ensureLoggedIn(req, res, next) {
 
 	return res.redirect('/login');
 }
-async function createValidationCheck(req, res, next) {
+async function createValidationCheck(req,) {
 	const validation = validationResult(req);
 	const customValidations = ['nei takk']
 	if (!validation.isEmpty()) {
@@ -80,23 +80,39 @@ async function createAccount(req, res) {
 	return res.redirect('/login')
 }
 
-function skraRoute(req, res, next) {
-	return res.render('skra', {
-		title: 'Skrá leik',
-	});
-}
-
-function skraRouteInsert(req, res, next) {
+async function skraRouteInsert(req, res) {
 	// TODO mjög hrátt allt saman, vantar validation!
 	const { when, homename, homescore, awayname, awayscore } = req.body;
-	const result = insertGame(
+	const result = await insertGame(
 		new Date(when),
 		Number(homename),
 		Number(homescore),
 		Number(awayname),
 		Number(awayscore));
-
-	res.redirect('/admin');
+	if (result) {
+		res.redirect('/admin');
+	} else {
+		const { username, admin } = una();
+		const time = currentdate();
+		const teams = listTeams();
+		const games = getGames();
+		const customValidations = ['Ekki tókst að setja gögn í gagnagrunn']
+		return res.render('admin', {
+			username,
+			time,
+			title: 'Umsjónarsíða Admin - villa í innsetningu leiks',
+			when,
+			homename,
+			homescore,
+			awayname,
+			awayscore,
+			errors: customValidations,
+			admin,
+			teams,
+			games
+		});
+	}
+	return true
 }
 
 adminRouter.get('/register',
@@ -111,7 +127,7 @@ adminRouter.get('/admin', ensureLoggedIn, adminRoute);
 adminRouter.post('/skra',
 	gameRegistrationValidationMiddleware(),
 	gameXssSanitizationMiddleware(),
-	catchErrors(validationCheckUpdate),
+	(catchErrors(validationCheckUpdate)),
 	(catchErrors(skraRouteInsert)));
 
 adminRouter.post(

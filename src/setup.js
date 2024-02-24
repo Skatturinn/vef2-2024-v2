@@ -2,13 +2,6 @@ import { createSchema, dropSchema, end, query } from './lib/db.js';
 import { readFile } from './setup/file.js';
 import { insertData } from './setup/parse.js';
 
-
-async function main() {
-	const games = await query('select * from games');
-
-	console.log(games);
-}
-
 async function create() {
 	// TODO setja upp gagnagrun + gögn
 	const drop = await dropSchema();

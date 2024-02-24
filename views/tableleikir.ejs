@@ -10,30 +10,30 @@
 	<tbody>
 		<% let datevariable%>
 			<% for (const game of locals.games) { %>
-				<tr>
-					<% if (String(game.date)!==String(datevariable)) { %>
-						<td class="newdate">
-							<% } else { %>
-						<td class="olddate">
-							<% } %>
-								<%= String(game.date.toISOString().slice(0,
-									10).split('-').reverse()).replaceAll(',', '/' ) %>
-						</td>
-						<td class="team__home">
-							<%= game.home.name %>
-						</td>
-						<td class="team__home__score">
-							<%= game.home.score %>
-						</td>
-						<td class="team__away">
-							<%= game.away.name %>
-						</td>
-						<td class="team__away__score">
-							<%= game.away.score %>
-						</td>
-				</tr>
+				<% const dagur=String(game.date.toISOString()).slice(0,10); %>
+					<tr>
+						<% if (dagur!==datevariable) { %>
+							<td class="newdate">
+								<% } else { %>
+							<td class="olddate">
+								<% } %>
+									<%= String((dagur.split('-')).reverse()).replaceAll(',','/') %>
+							</td>
+							<td class="team__home">
+								<%= game.home.name %>
+							</td>
+							<td class="team__home__score">
+								<%= game.home.score %>
+							</td>
+							<td class="team__away">
+								<%= game.away.name %>
+							</td>
+							<td class="team__away__score">
+								<%= game.away.score %>
+							</td>
+					</tr>
 
-				<% datevariable=game.date %>
-					<% } %>
+					<% datevariable=dagur %>
+						<% } %>
 	</tbody>
 </table>

@@ -67,6 +67,7 @@ footer {
 }
 
 table {
+	text-align: center;
 	margin: 0 auto;
 }
 
@@ -85,4 +86,33 @@ table {
 
 .field input {
 	padding: 0.5em;
+}
+
+tr {
+	display: grid;
+	max-width: 100%;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 0.1em;
+}
+
+.stadatabla tr {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.newdate {
+	grid-column: span 4;
+	padding: 0.25em;
+	margin: 0.25em 0;
+	border-top: 1px solid black;
+}
+
+.olddate {
+	display: none;
+}
+
+td,
+th {
+	overflow: hidden;
+	align-self: center;
+	padding: 0.1em 0;
 }

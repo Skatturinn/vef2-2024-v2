@@ -87,7 +87,9 @@ table {
 	flex: 1;
 }
 
-.field input {
+.field input,
+.field select,
+button {
 	padding: 0.5em;
 }
 

@@ -17,12 +17,12 @@ jobs:
           node-version: 20
 
       - name: Install dependencies
-        run: yarn install
+        run: npm install
 
       - name: Lint
-        run: yarn lint
+        run: npm run lint
 
       - name: Test
         # Run this even if linting failed
         if: always()
-        run: yarn test
+        run: npm run test

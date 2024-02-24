@@ -14,7 +14,6 @@ import { comparePasswords } from './users.js';
 * @param {function} done Fall sem kallað er í með niðurstöðu
 */
 async function strat(username, password, done) {
-	console.log(username)
 	try {
 		const user = await findByUsername(username);
 		if (!user) {
@@ -54,9 +53,7 @@ passport.deserializeUser(async (id, done) => {
 // Hjálpar middleware sem athugar hvort notandi sé innskráður og hleypir okkur
 // þá áfram, annars sendir á /login
 export function ensureLoggedIn(req, res, next) {
-	// console.log(req)
 	if (req.isAuthenticated()) {
-		// console.log(req.isAuthenticated())
 		return next();
 	}
 

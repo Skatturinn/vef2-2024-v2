@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import passport from 'passport';
 import { catchErrors } from '../lib/catch-errors.js';
 import { createUser, getGames, insertGame, listTeams } from '../lib/db.js';
+import { una } from '../lib/users.js';
 import {
 	gameRegistrationValidationMiddleware,
 	gameXssSanitizationMiddleware,
@@ -12,7 +13,6 @@ import {
 	validationCheckUpdate
 } from '../lib/validation.js';
 import { currentdate } from '../util/date.js';
-import { una } from './index-routes.js';
 
 export const adminRouter = express.Router();
 

@@ -3,8 +3,7 @@ import { readFile } from 'fs/promises';
 import pg from 'pg';
 import { environment } from './environment.js';
 import { logger } from './logger.js';
-// import { env } from '../app.js';
-// console.log(process.env)
+
 const SCHEMA_FILE = './src/sql/schema.sql';
 const DROP_SCHEMA_FILE = './src/sql/drop.sql';
 

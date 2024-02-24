@@ -1,4 +1,14 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+
 body {
+	background-color: white;
+	color: black;
+	padding: 0 0.5vw;
 	margin: 0 auto;
 	width: fit-content;
 	min-height: 100vh;
@@ -27,7 +37,10 @@ nav ul {
 }
 
 main ul {
-	padding: 0;
+	padding: 0.25em 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.25em;
 }
 
 li {
@@ -41,14 +54,10 @@ a {
 	color: inherit;
 	text-decoration: none;
 	border: 1px black solid;
-	padding: 0.25em 1em;
+	padding: 0.5em 1em;
 	border-radius: 1em;
 	flex: 1;
 	justify-content: start;
-}
-
-a section {
-	align-self: flex-start;
 }
 
 footer {
@@ -59,4 +68,21 @@ footer {
 
 table {
 	margin: 0 auto;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	gap: 2em;
+	padding: 2em 0;
+}
+
+.field {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.field input {
+	padding: 0.5em;
 }

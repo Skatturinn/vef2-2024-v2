@@ -1,14 +1,10 @@
 import express from 'express';
-import { getGames, listTeams } from '../lib/db.js';
+import { getGames } from '../lib/db.js';
 import { stadan } from '../setup/score.js';
 import { currentdate } from '../util/date.js';
+import { una } from '../lib/users.js';
 
 export const indexRouter = express.Router();
-
-export function una(req) {
-	const { user: { username, admin } = {} } = req || {};
-	return { username, admin };
-}
 
 async function indexRoute(req, res) {
 	const loggedIn = req.isAuthenticated();
@@ -25,9 +21,6 @@ async function indexRoute(req, res) {
 async function leikirRoute(req, res) {
 	const loggedIn = req.isAuthenticated();
 	const games = await getGames();
-	const teams = await listTeams();
-	const sigur = teams?.map(stak => stak.id === 1)
-	console.log(sigur?.includes(true))
 	return res.render('leikir', {
 		title: 'Leikir',
 		games,

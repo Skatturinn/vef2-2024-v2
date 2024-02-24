@@ -2,10 +2,10 @@
 	<h1>
 		<%= title %>
 	</h1>
-	<form method="post" action="/register" autocomplete="off">
+	<form class="form" method="post" action="/register" autocomplete="off">
 		<%- include('user') -%>
 			<div>
-				<input type="checkbox" id="king" name="king" />
+				<input class="cbox" type="checkbox" id="king" name="king" />
 				<label for="king">Vera admin?</label>
 			</div>
 			<% if (message) { %>
@@ -15,5 +15,8 @@
 				<% } %>
 					<button>Stofna aðgang</button>
 	</form>
+
+	<a href="/">Til baka</a>
+
 
 	<%- include('footer') -%>

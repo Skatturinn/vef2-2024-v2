@@ -5,11 +5,6 @@
 - Notendanafn: admin
 - Lykilorð: b
 
-## User
-
-- Notendanafn: guest
-- Lykilorð: b
-
 # Vefforritun 2, 2024, verkefni 2: Express, postgres og hýsing
 
 - [Kynning á verkefni](https://youtu.be/OlYfb4N-IZQ)

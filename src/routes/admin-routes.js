@@ -3,6 +3,7 @@ import { validationResult } from 'express-validator';
 import passport from 'passport';
 import { catchErrors } from '../lib/catch-errors.js';
 import { createUser, getGames, insertGame, listTeams } from '../lib/db.js';
+import { handlerError } from '../lib/handlers.js';
 import { una } from '../lib/users.js';
 import {
 	gameRegistrationValidationMiddleware,
@@ -144,3 +145,8 @@ adminRouter.post(
 		res.redirect('/admin');
 	},
 );
+adminRouter.get('/logout', (req, res) => {
+	// logout hendir session cookie og session
+	req.logout((err) => handlerError(err, req, res, null));
+	res.redirect('/');
+});

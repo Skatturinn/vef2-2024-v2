@@ -53,10 +53,8 @@ export function gameRegistrationValidationMiddleware() {
 		body('homename')
 			.trim()
 			.exists({ values: 'falsy' })
-			.isString()
-			.withMessage('Þarf að vera strengur')
-			.isLength({ max: 64 })
-			.withMessage('Má að hámarki vera 64 stafir')
+			.isInt({ min: 1, max: 12 })
+			.withMessage('Þarf að vera löglegt id á liði, bil 1 til 12')
 			.custom(async (stak) => {
 				const teams = await listTeams()
 				return teams?.includes(stak)
@@ -65,21 +63,21 @@ export function gameRegistrationValidationMiddleware() {
 		body('awayname')
 			.trim()
 			.exists({ values: 'falsy' })
-			.isString()
-			.withMessage('Þarf að vera strengur')
-			.isLength({ max: 64 })
-			.withMessage('Má að hámarki vera 64 stafir')
+			.isInt({ min: 1, max: 12 })
+			.withMessage('Þarf að vera löglegt id á liði, bil 1 til 12')
 			.custom(async (stak) => {
 				const teams = await listTeams()
 				return teams?.includes(stak)
 			})
 			.withMessage('Ekki tókst að finna úti lið'),
 		body('homescore')
+			.trim()
 			.isInt({ min: 0 })
-			.withMessage('þarf að vera heiltala stærri en núll'),
+			.withMessage('þarf að vera heiltala stærri en eða jafnt og núll'),
 		body('awayscore')
+			.trim()
 			.isInt({ min: 0 })
-			.withMessage('þarf að vera heiltala stærri en núll'),
+			.withMessage('þarf að vera heiltala stærri en eða jafnt og núll'),
 		body('admin')
 			.custom((stak, { req }) => req.isAuthenticated())
 			.withMessage('vantar admin réttindi, vinsamlegast skráðu þig aftur inn')

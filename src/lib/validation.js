@@ -59,7 +59,7 @@ export function gameRegistrationValidationMiddleware() {
 				const teams = await listTeams()
 				return teams?.includes(stak)
 			})
-			.withMessage('Ekki tókst að finna heima lið'),
+			.withMessage('Ekki tókst að finna heima lið á skrá'),
 		body('awayname')
 			.trim()
 			.exists({ values: 'falsy' })
@@ -69,7 +69,7 @@ export function gameRegistrationValidationMiddleware() {
 				const teams = await listTeams()
 				return teams?.includes(stak)
 			})
-			.withMessage('Ekki tókst að finna úti lið'),
+			.withMessage('Ekki tókst að finna úti lið á skrá'),
 		body('homescore')
 			.trim()
 			.isInt({ min: 0 })

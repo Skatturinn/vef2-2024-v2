@@ -10,7 +10,8 @@
 			</div>
 			<div class="field">
 				<label for="homename">Heima lið</label>
-				<select id="homename" name="homename" value="<%= locals.homename || 0 %>" required>
+				<select id="homename" name="homename" size="1" required>
+					<option value="">--Veldu lið--</option>
 					<%- include("teamoption") %>
 				</select>
 			</div>
@@ -21,7 +22,8 @@
 			</div>
 			<div class="field">
 				<label for="awayname">Úti lið</label>
-				<select id="awayname" name="awayname" required value="<%= locals.awayname || 0 %>">
+				<select id="awayname" name="awayname" size="1" required>
+					<option value="">--Veldu lið--</option>
 					<%- include("teamoption") %>
 				</select>
 			</div>

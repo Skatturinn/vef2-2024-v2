@@ -155,24 +155,6 @@ export async function listTeams() {
 	return null;
 }
 
-export async function getTeamsId() {
-	const q = `
-	  SELECT
-		id, name
-	  FROM
-		teams
-	  WHERE id = 4
-	`;
-
-	const result = await query(q);
-
-	if (result && result.rowCount === 1) {
-		return result.rows[0];
-	}
-
-	return null;
-}
-
 export async function findByUsername(username) {
 	const q = 'SELECT * FROM users WHERE username = $1';
 

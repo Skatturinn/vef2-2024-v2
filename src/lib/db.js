@@ -134,14 +134,11 @@ export async function createSchema(schemaFile = SCHEMA_FILE) {
 	const data = await readFile(schemaFile);
 	return query(data.toString('utf-8'));
 }
-/**
- * 
- * @returns {Promise<[{name:string, id:number;}] | null>}
- */
+
 export async function listTeams() {
 	const q = `
 	  SELECT
-		id, name
+		*
 	  FROM
 		teams
 	`;
@@ -154,6 +151,25 @@ export async function listTeams() {
 
 	return null;
 }
+export async function getTeamBySlug(slug) {
+	const q = `
+	  SELECT
+		*
+	  FROM
+		teams
+		WHERE 
+		slug = $1
+	`;
+
+	const result = await query(q, [slug]);
+
+	if (result) {
+		return result.rows;
+	}
+
+	return null;
+}
+
 
 export async function findByUsername(username) {
 	const q = 'SELECT * FROM users WHERE username = $1';
